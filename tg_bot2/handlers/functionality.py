@@ -2,13 +2,12 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from tg_bot2.data import config
+from tg_bot2.data.models import User
 from tg_bot2.keyboards.default import start_keyboard
 
-
 async def consultation_handler(message: types.Message, state: FSMContext):
-    await state.finish()
-    photo = types.InputFile(config.START_IMAGE_PATH)
-    await message.answer_photo(photo, config.START_TEXT,reply_markup=start_keyboard())
+    user = await User.get(id=message.from_user.id)
+    print(user)
 
 
 async def training_handler(message: types.Message, state: FSMContext):

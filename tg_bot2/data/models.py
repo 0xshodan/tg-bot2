@@ -3,6 +3,7 @@ from tortoise import fields
 
 class User(Model):
     id = fields.BigIntField(pk=True)
+
     telegram_first_name = fields.CharField(max_length=64, default="")
     telegram_last_name = fields.CharField(max_length=64, default="")
     telegram_username = fields.CharField(max_length=32, unique=True)
@@ -25,5 +26,5 @@ class User(Model):
 
 
     def __str__(self):
-        return self.name
+        return self.telegram_username
 

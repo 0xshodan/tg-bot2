@@ -5,17 +5,17 @@ from aiogram.dispatcher import FSMContext
 from tg_bot2.data import config
 from tg_bot2.data.models import User
 from tg_bot2.keyboards.default import start_keyboard
-
+from tortoise.exceptions import DoesNotExist
 
 async def welcome_handler(message: types.Message, state: FSMContext):
-    User.get_or_create(
-        id=message.from_user.id,
-        defaults={
-            "id":message.from_user.id,
-            "telegram_first_name":message.from_user.first_name,
-            "telegram_last_name":message.from_user.last_name,
-            "telegram_username":message.from_user.username,
-            }
+    try:
+        await User.get(id = message.from_user.id)
+    except DoesNotExist:
+        await User.create(
+            id=message.from_user.id,
+            telegram_first_name=message.from_user.first_name,
+            telegram_last_name=message.from_user.last_name,
+            telegram_username=message.from_user.username,
             )
     await state.finish()
     photo = types.InputFile(config.START_IMAGE_PATH)
