@@ -2,12 +2,14 @@
 from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from tg_bot2.data import config
-from tg_bot2.data.models import User
 from tg_bot2.keyboards.default import start_keyboard
+from .collect_general_info import entrypoint
+
 
 async def consultation_handler(message: types.Message, state: FSMContext):
-    user = await User.get(id=message.from_user.id)
-    print(user)
+    user = await entrypoint(message, state, external_type="consultation")
+    if user is not None:
+        pass
 
 
 async def training_handler(message: types.Message, state: FSMContext):
