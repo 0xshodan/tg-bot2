@@ -8,7 +8,7 @@ from tortoise import Tortoise, run_async
 async def init_db():
     await Tortoise.init(
         db_url='sqlite://db.sqlite3',
-        modules={'models': ['tg_bot2.data.models']}
+        modules={'models': ['tg_bot2.data.models', 'tg_bot2.admin.models']}
     )
     await Tortoise.generate_schemas()
 

@@ -13,7 +13,7 @@ class Consultation(StatesGroup):
     question = State()
 
 class Training(StatesGroup):
-    description = State()
+    about = State()
     education = State()
     age = State()
 
