@@ -168,3 +168,6 @@ media
 
 # Vscode
 .vscode
+
+# Media
+tg_bot2/public/img/*
