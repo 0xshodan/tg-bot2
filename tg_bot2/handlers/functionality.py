@@ -17,12 +17,12 @@ async def training_handler(message: types.Message, state: FSMContext):
     await state.finish()
     user = await entrypoint(message, state, external_type="training")
     if user is not None:
-        if not user.training:
-            await state.set_data({"user":user})
-            await states.Training.about.set()
-            await message.answer("Кратко опишите себя:")
-        else:
-            await message.answer("Вы уже записаны на обучение, ожидайте когда с вами свяжутся")
+        # if not user.training:
+        await state.set_data({"user":user})
+        await states.Training.about.set()
+        await message.answer("Кратко опишите себя:")
+        # else:
+        #     await message.answer("Вы уже записаны на обучение, ожидайте когда с вами свяжутся")
 
 
 async def analysis_handler(message: types.Message, state: FSMContext):
