@@ -3,12 +3,15 @@ from aiogram.dispatcher import FSMContext
 from tg_bot2 import states
 from tg_bot2.data.models import Analyze
 from tg_bot2.keyboards.default import skip, main_menu
+from tg_bot2.utils import answer_analyze
+
 
 async def collect_project_url(message: types.Message, state: FSMContext):
     data = await state.get_data()
     user = data["user"]
 
     analyze = Analyze(user=user)
+    analyze.project_url = message.text
     await state.update_data({"analyze": analyze})
 
     await states.Analysis.app.set()
@@ -35,6 +38,8 @@ async def collect_other_info(message: types.Message, state: FSMContext):
     await state.finish()
 
     await message.answer("Ваша заявка принята, ожидайте, когда с вами свяжутся", reply_markup=main_menu())
+    await answer_analyze(message, analyze)
+
 
 def register_analysis_handlers(dp: Dispatcher):
     dp.register_message_handler(collect_project_url, state=states.Analysis.project_url)

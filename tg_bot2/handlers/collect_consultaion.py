@@ -3,11 +3,13 @@ from aiogram.dispatcher import FSMContext
 from tg_bot2 import states
 from tg_bot2.data.models import Question
 from tg_bot2.keyboards.default import main_menu
+from tg_bot2.utils import answer_question
 
 async def collect_question(message: types.Message, state: FSMContext):
     data = await state.get_data()
     user = data["user"]
     await Question.create(user=user, text=message.text)
+    await answer_question(message, Question(user=user, text=message.text))
     await message.answer("Все готово! Ваш вопрос доставлен", reply_markup=main_menu())
 
 def register_question_handler(dp: Dispatcher):

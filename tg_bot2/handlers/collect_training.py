@@ -2,6 +2,8 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from tg_bot2 import states
 from tg_bot2.keyboards.default import main_menu
+from tg_bot2.utils import answer_education
+
 
 async def collect_about(message: types.Message, state: FSMContext):
     data = await state.get_data()
@@ -35,6 +37,7 @@ async def collect_age(message: types.Message, state: FSMContext):
     await user.save()
     await state.finish()
     await message.answer("Поздравляем, вы записались на обучение! Ожидайте, когда с вами свяжутся", reply_markup=main_menu())
+    await answer_education(message, user)
 
 
 def register_training_handlers(dp: Dispatcher):
